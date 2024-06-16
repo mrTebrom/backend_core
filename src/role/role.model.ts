@@ -1,13 +1,9 @@
 // src/roles/role.entity.ts
 import { Column, DataType, Model, Table } from "sequelize-typescript";
-
-export interface CreateRole {
-  value: string; // Название роли
-  description: string; // Описание роли
-}
+import { CreateRoleDto } from "./role.dto";
 
 @Table
-export class Role extends Model<Role, CreateRole> {
+export class Role extends Model<Role, CreateRoleDto> {
   @Column({
     type: DataType.INTEGER,
     autoIncrement: true,
