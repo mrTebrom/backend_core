@@ -19,9 +19,9 @@ export class RoleController {
     return this.service.getAllRoles();
   }
 
-  @Get("id=:id")
+  @Get("/id=:id")
   getById(@Param("id") id: number) {
-    return this.getById(id);
+    return this.service.getRoleById(id);
   }
 
   @Post()
@@ -29,12 +29,13 @@ export class RoleController {
     return this.service.createRole(dto);
   }
 
-  @Put("id=:id")
+  @Put("/id=:id")
   update(@Body() dto: UpdateRoleDto, @Param("id") id: number) {
+    console.log(dto);
     return this.service.updateRole(id, dto);
   }
 
-  @Delete("id=:id")
+  @Delete("/id=:id")
   destroy(@Param("id") id: number) {
     return this.service.deleteRole(id);
   }

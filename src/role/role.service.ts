@@ -48,7 +48,11 @@ export class RoleService {
 
     // Проверка уникальности роли
     const candidate = await this.model.findOne({ where: { value: dto.value } });
-    if (candidate.value === role.value && candidate.id !== role.id) {
+    if (
+      candidate &&
+      candidate.id === role.id &&
+      candidate.value === dto.value
+    ) {
       throw new HttpException(
         "Название для роли уже занято",
         HttpStatus.BAD_REQUEST,
