@@ -2,7 +2,9 @@
 import { Column, DataType, Model, Table } from "sequelize-typescript";
 import { CreateRoleDto } from "./role.dto";
 
-@Table
+@Table({
+  tableName: "role",
+})
 export class Role extends Model<Role, CreateRoleDto> {
   @Column({
     type: DataType.INTEGER,

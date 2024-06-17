@@ -5,10 +5,10 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { ConfigModule } from "@nestjs/config";
 import { SequelizeModule } from "@nestjs/sequelize";
+import { Role } from "./role/role.model";
 
 @Module({
   imports: [
-    RoleModule,
     ConfigModule.forRoot({
       envFilePath: `.dev.env`,
     }),
@@ -18,9 +18,14 @@ import { SequelizeModule } from "@nestjs/sequelize";
       port: parseInt(process.env.DATABASE_PORT, 10) || 5432,
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
-      name: process.env.DATABASE_NAME,
+      database: process.env.DATABASE_NAME,
+      autoLoadModels: true,
+      synchronize: true,
+      models: [Role],
+      logging: false,
     }),
     AuthModule,
+    RoleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
