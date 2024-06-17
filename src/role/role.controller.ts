@@ -26,16 +26,16 @@ export class RoleController {
 
   @Post()
   create(@Body() dto: CreateRoleDto) {
-    return this.create(dto);
+    return this.service.createRole(dto);
   }
 
   @Put("id=:id")
   update(@Body() dto: UpdateRoleDto, @Param("id") id: number) {
-    return this.update(dto, id);
+    return this.service.updateRole(id, dto);
   }
 
   @Delete("id=:id")
   destroy(@Param("id") id: number) {
-    return this.destroy(id);
+    return this.service.deleteRole(id);
   }
 }
