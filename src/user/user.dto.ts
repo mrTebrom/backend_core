@@ -15,7 +15,7 @@ export class CreateUserDto {
   @Length(3, 20, {
     message: "Имя пользователя должно быть от 3 до 20 символов",
   })
-  username: string;
+  username: string; // Логин
 
   @ApiProperty({
     example: "john.doe@example.com",
@@ -23,28 +23,28 @@ export class CreateUserDto {
   })
   // @IsNotEmpty({ message: "Электронная почта обязательна для заполнения" })
   @IsEmail({}, { message: "Некорректный формат электронной почты" })
-  email: string;
+  email: string; // Почта
 
   @ApiProperty({ example: "+1234567890", description: "Номер телефона" })
   // @IsNotEmpty({ message: "Номер телефона обязателен для заполнения" })
   @IsPhoneNumber(null, { message: "Некорректный номер телефона" })
-  phone: string;
+  phone: string; // Телефон
 
   @ApiProperty({ example: "password123", description: "Пароль" })
   @IsNotEmpty({ message: "Пароль обязателен для заполнения" })
   @IsString({ message: "Пароль должен быть строкой" })
   @Length(6, 20, { message: "Пароль должен быть от 6 до 20 символов" })
-  password: string;
+  password: string; // Пороль
 
   @ApiProperty({ example: "John", description: "Имя", required: false })
   @IsOptional()
   @IsString({ message: "Имя должно быть строкой" })
-  firstName?: string;
+  firstName?: string; // Имя
 
   @ApiProperty({ example: "Doe", description: "Фамилия", required: false })
   @IsOptional()
   @IsString({ message: "Фамилия должна быть строкой" })
-  lastName?: string;
+  lastName?: string; // Фамилия
 }
 
 export class UpdateUserDto {
