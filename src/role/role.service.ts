@@ -74,7 +74,7 @@ export class RoleService {
     // Получение ролей по названнию
 
     const roles = await this.model.findAll({
-      where: { id: ids },
+      where: { value: ids },
     });
 
     return roles;

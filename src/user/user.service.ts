@@ -3,14 +3,14 @@ import { InjectModel } from "@nestjs/sequelize";
 import { CreateUserDto, UpdateUserDto } from "./user.dto";
 import { User } from "./user.model";
 import { Role } from "../role/role.model";
+import { RoleService } from "src/role/role.service";
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(User)
     private readonly userModel: typeof User,
-    @InjectModel(Role)
-    private readonly roleModel: typeof Role,
+    private role: RoleService,
   ) {}
 
   async createUser(dto: CreateUserDto): Promise<User> {
@@ -18,10 +18,10 @@ export class UserService {
     const user = await this.userModel.create(userData);
 
     if (roles && roles.length > 0) {
-      const roleInstances = await this.roleModel.findAll({
-        where: { value: roles },
-      });
-      await user.$set("roles", roleInstances);
+      // Проверка, есть ли роли в DTO
+      const roleInstances = await this.role.findByRoles(roles); // Поиск ролей через сервис RoleService
+
+      await user.$set("roles", roleInstances); // Установка ролей для пользователя
     }
 
     return user;
@@ -35,11 +35,11 @@ export class UserService {
     }
     await user.update(userData);
 
-    if (roles) {
-      const roleInstances = await this.roleModel.findAll({
-        where: { value: roles },
-      });
-      await user.$set("roles", roleInstances);
+    if (roles && roles.length > 0) {
+      // Проверка, есть ли роли в DTO
+      const roleInstances = await this.role.findByRoles(roles); // Поиск ролей через сервис RoleService
+
+      await user.$set("roles", roleInstances); // Установка ролей для пользователя
     }
 
     return user;
