@@ -5,6 +5,8 @@ import {
   IsPhoneNumber,
   IsString,
   Length,
+  IsArray,
+  ArrayNotEmpty,
 } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
@@ -21,12 +23,12 @@ export class CreateUserDto {
     example: "john.doe@example.com",
     description: "Электронная почта",
   })
-  // @IsNotEmpty({ message: "Электронная почта обязательна для заполнения" })
+  @IsNotEmpty({ message: "Электронная почта обязательна для заполнения" })
   @IsEmail({}, { message: "Некорректный формат электронной почты" })
   email: string; // Почта
 
   @ApiProperty({ example: "+1234567890", description: "Номер телефона" })
-  // @IsNotEmpty({ message: "Номер телефона обязателен для заполнения" })
+  @IsNotEmpty({ message: "Номер телефона обязателен для заполнения" })
   @IsPhoneNumber(null, { message: "Некорректный номер телефона" })
   phone: string; // Телефон
 
@@ -34,7 +36,7 @@ export class CreateUserDto {
   @IsNotEmpty({ message: "Пароль обязателен для заполнения" })
   @IsString({ message: "Пароль должен быть строкой" })
   @Length(6, 20, { message: "Пароль должен быть от 6 до 20 символов" })
-  password: string; // Пороль
+  password: string; // Пароль
 
   @ApiProperty({ example: "John", description: "Имя", required: false })
   @IsOptional()
@@ -45,6 +47,16 @@ export class CreateUserDto {
   @IsOptional()
   @IsString({ message: "Фамилия должна быть строкой" })
   lastName?: string; // Фамилия
+
+  @ApiProperty({
+    example: ["admin", "user"],
+    description: "Роли пользователя",
+    isArray: true,
+  })
+  @IsArray({ message: "Роли должны быть массивом строк" })
+  @ArrayNotEmpty({ message: "Роли не могут быть пустыми" })
+  @IsString({ each: true, message: "Каждая роль должна быть строкой" })
+  roles: string[]; // Роли пользователя
 }
 
 export class UpdateUserDto {
@@ -97,4 +109,15 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString({ message: "Фамилия должна быть строкой" })
   lastName?: string;
+
+  @ApiProperty({
+    example: ["admin", "user"],
+    description: "Роли пользователя",
+    required: false,
+    isArray: true,
+  })
+  @IsOptional()
+  @IsArray({ message: "Роли должны быть массивом строк" })
+  @IsString({ each: true, message: "Каждая роль должна быть строкой" })
+  roles?: string[];
 }

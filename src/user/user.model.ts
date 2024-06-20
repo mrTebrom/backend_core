@@ -5,7 +5,10 @@ import {
   PrimaryKey,
   AutoIncrement,
   DataType,
+  BelongsToMany,
 } from "sequelize-typescript";
+import { Role } from "../role/role.model";
+import { UserRole } from "./relations/user-role";
 import { CreateUserDto } from "./user.dto";
 
 @Table({ tableName: "user" })
@@ -66,4 +69,7 @@ export class User extends Model<User, CreateUserDto> {
     allowNull: true,
   })
   lastName?: string;
+
+  @BelongsToMany(() => Role, () => UserRole)
+  roles: Role[];
 }
