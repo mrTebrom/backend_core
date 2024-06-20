@@ -69,4 +69,14 @@ export class RoleService {
     const role = await this.getRoleById(id);
     await role.destroy();
   }
+
+  async findByRoles(ids: string[]) {
+    // Получение ролей по названнию
+
+    const roles = await this.model.findAll({
+      where: { id: ids },
+    });
+
+    return roles;
+  }
 }

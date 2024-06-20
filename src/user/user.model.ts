@@ -9,10 +9,9 @@ import {
 } from "sequelize-typescript";
 import { Role } from "../role/role.model";
 import { UserRole } from "./relations/user-role";
-import { CreateUserDto } from "./user.dto";
 
-@Table({ tableName: "user" })
-export class User extends Model<User, CreateUserDto> {
+@Table
+export class User extends Model<User> {
   @PrimaryKey
   @AutoIncrement
   @Column
@@ -40,10 +39,11 @@ export class User extends Model<User, CreateUserDto> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
     validate: {
-      is: /^[0-9]+$/,
-      notEmpty: true,
+      is: {
+        args: /^\+\d{1,15}$/,
+        msg: "Некорректный номер телефона",
+      },
     },
   })
   phone: string;

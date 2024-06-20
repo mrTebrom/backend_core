@@ -17,7 +17,7 @@ export class CreateUserDto {
   @Length(3, 20, {
     message: "Имя пользователя должно быть от 3 до 20 символов",
   })
-  username: string; // Логин
+  username: string;
 
   @ApiProperty({
     example: "john.doe@example.com",
@@ -25,28 +25,28 @@ export class CreateUserDto {
   })
   @IsNotEmpty({ message: "Электронная почта обязательна для заполнения" })
   @IsEmail({}, { message: "Некорректный формат электронной почты" })
-  email: string; // Почта
+  email: string;
 
   @ApiProperty({ example: "+1234567890", description: "Номер телефона" })
   @IsNotEmpty({ message: "Номер телефона обязателен для заполнения" })
-  @IsPhoneNumber(null, { message: "Некорректный номер телефона" })
-  phone: string; // Телефон
+  @IsPhoneNumber("KZ", { message: "Некорректный номер телефона" })
+  phone: string;
 
   @ApiProperty({ example: "password123", description: "Пароль" })
   @IsNotEmpty({ message: "Пароль обязателен для заполнения" })
   @IsString({ message: "Пароль должен быть строкой" })
   @Length(6, 20, { message: "Пароль должен быть от 6 до 20 символов" })
-  password: string; // Пароль
+  password: string;
 
   @ApiProperty({ example: "John", description: "Имя", required: false })
   @IsOptional()
   @IsString({ message: "Имя должно быть строкой" })
-  firstName?: string; // Имя
+  firstName?: string;
 
   @ApiProperty({ example: "Doe", description: "Фамилия", required: false })
   @IsOptional()
   @IsString({ message: "Фамилия должна быть строкой" })
-  lastName?: string; // Фамилия
+  lastName?: string;
 
   @ApiProperty({
     example: ["admin", "user"],
@@ -56,7 +56,7 @@ export class CreateUserDto {
   @IsArray({ message: "Роли должны быть массивом строк" })
   @ArrayNotEmpty({ message: "Роли не могут быть пустыми" })
   @IsString({ each: true, message: "Каждая роль должна быть строкой" })
-  roles: string[]; // Роли пользователя
+  roles: string[];
 }
 
 export class UpdateUserDto {
@@ -87,7 +87,7 @@ export class UpdateUserDto {
     required: false,
   })
   @IsOptional()
-  @IsPhoneNumber(null, { message: "Некорректный номер телефона" })
+  @IsPhoneNumber("KZ", { message: "Некорректный номер телефона" })
   phone?: string;
 
   @ApiProperty({
