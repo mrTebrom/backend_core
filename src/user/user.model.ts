@@ -9,9 +9,10 @@ import {
 } from "sequelize-typescript";
 import { Role } from "../role/role.model";
 import { UserRole } from "./relations/user-role";
+import { CreateUserDto } from "./user.dto";
 
 @Table
-export class User extends Model<User> {
+export class User extends Model<User, CreateUserDto> {
   @PrimaryKey
   @AutoIncrement
   @Column
