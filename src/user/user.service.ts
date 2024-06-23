@@ -53,6 +53,12 @@ export class UserService {
     return this.userModel.findByPk(id, { include: [Role] });
   }
 
+  // Поиск по логину
+  async findByUsername(username: string) {
+    // Получаем логин и ищем его
+    return this.userModel.findOne({ where: { username: username } });
+  }
+
   async deleteUser(id: number): Promise<void> {
     const user = await this.userModel.findByPk(id);
     if (!user) {
